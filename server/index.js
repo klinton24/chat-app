@@ -35,6 +35,14 @@ io.on("connection", (socket) => {
     callback();
   });
 
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit("messsage", { user: user.name, text: message });
+
+    callback();
+  });
+
   socket.on("disconnet", () => {
     console.log("User has left");
   });
